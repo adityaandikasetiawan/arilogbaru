@@ -29,7 +29,6 @@ export default function Navbar() {
     setIsOpen(false);
     setShowServicesDropdown(false);
   };
-
   return (
     <nav className="bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4 md:px-8">
