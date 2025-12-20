@@ -58,12 +58,11 @@ export default function Footer() {
           {/* About Company */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl">
-                <Package className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
-                LogisticsXpress
-              </span>
+              <img 
+                src="/uploads/logo.webp" 
+                alt="PT Avantie Insyirah Raya" 
+                className="h-10 w-auto object-contain brightness-0 invert"
+              />
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Penyedia layanan logistik dan ekspedisi terpercaya di Indonesia dengan jangkauan domestik dan internasional.
@@ -128,21 +127,21 @@ export default function Footer() {
                   <MapPin className="w-4 h-4 text-white flex-shrink-0" />
                 </div>
                 <span className="text-gray-400 leading-relaxed">
-                  Jl. Logistik Raya No. 123<br />
-                  Jakarta 12345, Indonesia
+                  NKL Building, Jl. Raya Bekasi Timur km18 no 46<br />
+                  Jatinegara Kaum, Pulogadung, 13250
                 </span>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="p-2 bg-gradient-to-br from-blue-600 to-blue-500 rounded-lg group-hover:scale-110 transition-transform">
                   <Phone className="w-4 h-4 text-white flex-shrink-0" />
                 </div>
-                <span className="text-gray-400">+62 21 1234 5678</span>
+                <span className="text-gray-400">+62 811 8798 168</span>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="p-2 bg-gradient-to-br from-orange-600 to-orange-500 rounded-lg group-hover:scale-110 transition-transform">
                   <Mail className="w-4 h-4 text-white flex-shrink-0" />
                 </div>
-                <span className="text-gray-400">info@logistics.com</span>
+                <span className="text-gray-400">support@airlog.asia</span>
               </li>
             </ul>
           </div>
@@ -151,7 +150,7 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400">
-              © 2024 LogisticsXpress. All rights reserved.
+              © 2025 Airlog. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">

@@ -23,7 +23,11 @@ export default function Login() {
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="bg-white/80 backdrop-blur w-full max-w-md rounded-2xl shadow-xl border border-gray-100">
         <div className="px-8 pt-8 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-semibold">LX</div>
+            <img 
+              src="/uploads/logo.webp" 
+              alt="PT Avantie Insyirah Raya" 
+              className="h-10 w-auto object-contain"
+            />
             <div>
               <h1 className="text-xl font-semibold tracking-tight text-gray-900">Admin Login</h1>
               <p className="text-sm text-gray-600">Masuk untuk mengelola sistem</p>

@@ -36,7 +36,7 @@ export default function AboutUsPage() {
   ];
 
   const timeline = [
-    { year: '2009', title: 'Berdiri', description: 'LogisticsXpress didirikan dengan visi menjadi solusi logistik terpercaya' },
+    { year: '2009', title: 'Berdiri', description: 'PT Avantie Insyirah Raya didirikan dengan visi menjadi solusi logistik terpercaya' },
     { year: '2012', title: 'Ekspansi Nasional', description: 'Membuka cabang di 10 kota besar Indonesia' },
     { year: '2016', title: 'Teknologi Digital', description: 'Meluncurkan sistem tracking digital dan aplikasi mobile' },
     { year: '2020', title: 'ISO Certification', description: 'Mendapatkan sertifikasi ISO 9001:2015 untuk sistem manajemen mutu' },
@@ -95,8 +95,7 @@ export default function AboutUsPage() {
               Partner Logistik Terpercaya Anda
             </h1>
             <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-              Dengan pengalaman lebih dari 15 tahun, kami berkomitmen memberikan layanan logistik terbaik
-              untuk mendukung kesuksesan bisnis Anda di seluruh Indonesia.
+              At PT Avantie Insyirah Raya, our key capabilities revolve around delivering exceptional logistics solutions that prioritize customer satisfaction and long-term partnerships. We are committed to seamless logistics and boundless integrity, ensuring that our clients can rely on our services to streamline their supply chain operations.
             </p>
           </motion.div>
 
@@ -255,7 +254,7 @@ export default function AboutUsPage() {
               Perjalanan Kami
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Milestone penting dalam sejarah LogisticsXpress
+              Milestone penting dalam sejarah PT Avantie Insyirah Raya
             </p>
           </motion.div>
 

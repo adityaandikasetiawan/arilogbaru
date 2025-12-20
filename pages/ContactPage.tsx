@@ -10,19 +10,19 @@ export default function ContactPage() {
       id: 1,
       icon: <Phone className="w-8 h-8 text-blue-600" />,
       title: 'Telepon',
-      details: ['+62 21 1234 5678', '+62 812 3456 7890'],
+      details: ['+62 811 8798 168'],
     },
     {
       id: 2,
       icon: <Mail className="w-8 h-8 text-orange-600" />,
       title: 'Email',
-      details: ['info@logistics.com', 'support@logistics.com'],
+      details: ['support@airlog.asia'],
     },
     {
       id: 3,
       icon: <MapPin className="w-8 h-8 text-blue-600" />,
       title: 'Alamat',
-      details: ['Jl. Logistik Raya No. 123', 'Jakarta 12345, Indonesia'],
+      details: ['NKL Building, Jl. Raya Bekasi Timur km18 no 46', 'Jatinegara Kaum, Pulogadung, 13250'],
     },
     {
       id: 4,
@@ -71,7 +71,7 @@ export default function ContactPage() {
               <div className="text-center text-gray-500">
                 <MapPin className="w-16 h-16 mx-auto mb-4 text-gray-400" />
                 <p>Lokasi Kantor Kami</p>
-                <p className="text-sm mt-2">Jl. Logistik Raya No. 123, Jakarta</p>
+                <p className="text-sm mt-2">NKL Building, Pulogadung, Jakarta</p>
               </div>
             </div>
           </div>

@@ -39,15 +39,11 @@ export default function Navbar() {
             onClick={() => handleNavigate('/')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-400 rounded-xl blur-sm opacity-70 group-hover:opacity-100 transition-opacity" />
-              <div className="relative bg-gradient-to-br from-blue-600 to-blue-500 p-2 rounded-xl">
-                <Package className="w-6 h-6 text-white" />
-              </div>
-            </div>
-            <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent text-xl">
-              LogisticsXpress
-            </span>
+            <img 
+              src="/uploads/logo.webp" 
+              alt="PT Avantie Insyirah Raya" 
+              className="h-12 w-auto object-contain"
+            />
           </div>
 
           {/* Desktop Menu */}

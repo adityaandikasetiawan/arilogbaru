@@ -48,8 +48,12 @@ export default function Sidebar() {
   return (
     <div className="w-64 bg-white h-screen fixed left-0 top-0 shadow-lg flex flex-col">
       <div className="p-6 border-b border-gray-200">
-        <h2 className="text-blue-600">Admin Panel</h2>
-        <p className="text-sm text-gray-600 mt-1">Logistics System</p>
+        <img 
+          src="/uploads/logo.webp" 
+          alt="PT Avantie Insyirah Raya" 
+          className="h-8 w-auto object-contain mb-2"
+        />
+        <p className="text-sm text-gray-600 mt-1">Admin Panel</p>
       </div>
 
       <nav className="flex-1 p-4 overflow-y-auto">

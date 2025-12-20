@@ -58,7 +58,7 @@ export default function BlogPage() {
     },
     {
       id: 5,
-      title: 'Inovasi Sistem Tracking Real-Time di LogisticsXpress',
+      title: 'Inovasi Sistem Tracking Real-Time di PT Avantie Insyirah Raya',
       excerpt: 'Mengenal lebih dalam teknologi tracking terbaru yang memudahkan Anda memantau pengiriman.',
       image: 'https://images.unsplash.com/photo-1748346918817-0b1b6b2f9bab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjB0ZWFtfGVufDF8fHx8MTc2NTgxNTU1OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
       category: 'Teknologi',

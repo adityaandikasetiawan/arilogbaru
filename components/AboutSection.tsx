@@ -56,8 +56,7 @@ export default function AboutSection() {
             </div>
             <h2 className="mb-6 text-4xl md:text-5xl">Tentang Kami</h2>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Kami adalah perusahaan logistik dan ekspedisi terkemuka di Indonesia yang telah melayani ribuan pelanggan
-              dengan komitmen untuk memberikan layanan terbaik dalam pengiriman barang domestik dan internasional.
+              At PT Avantie Insyirah Raya, our key capabilities revolve around delivering exceptional logistics solutions that prioritize customer satisfaction and long-term partnerships. We are committed to seamless logistics and boundless integrity, ensuring that our clients can rely on our services to streamline their supply chain operations.
             </p>
             
             <div className="space-y-6">
