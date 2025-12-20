@@ -24,7 +24,7 @@ export default function Login() {
         <div className="px-8 pt-8 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <img 
-              src="/uploads/logo.webp" 
+              src="/uploads/logo-main.webp" 
               alt="PT Avantie Insyirah Raya" 
               className="h-10 w-auto object-contain"
             />

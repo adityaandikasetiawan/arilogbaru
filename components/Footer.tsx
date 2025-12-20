@@ -59,7 +59,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-6">
               <img 
-                src="/uploads/logo.webp" 
+                src="/uploads/logo-main.webp" 
                 alt="PT Avantie Insyirah Raya" 
                 className="h-10 w-auto object-contain brightness-0 invert"
               />

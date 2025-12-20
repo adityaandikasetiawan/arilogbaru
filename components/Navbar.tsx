@@ -39,7 +39,7 @@ export default function Navbar() {
             className="flex items-center gap-3 cursor-pointer group"
           >
             <img 
-              src="/uploads/logo.webp" 
+              src="/uploads/logo-main.webp" 
               alt="PT Avantie Insyirah Raya" 
               className="h-12 w-auto object-contain"
             />

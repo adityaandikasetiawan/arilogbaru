@@ -49,7 +49,7 @@ export default function Sidebar() {
     <div className="w-64 bg-white h-screen fixed left-0 top-0 shadow-lg flex flex-col">
       <div className="p-6 border-b border-gray-200">
         <img 
-          src="/uploads/logo.webp" 
+          src="/uploads/logo-main.webp" 
           alt="PT Avantie Insyirah Raya" 
           className="h-8 w-auto object-contain mb-2"
         />
