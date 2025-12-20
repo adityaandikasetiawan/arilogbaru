@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Edit, Plus, Trash2, MapPin } from 'lucide-react';
+import { Search, Edit, Plus, Trash2, MapPin, Printer } from 'lucide-react';
 import { toast, Toaster } from 'sonner@2.0.3';
 import Sidebar from '../../components/admin/Sidebar';
 
@@ -214,6 +214,13 @@ export default function ShipmentManagement() {
                       <td className="px-6 py-4">
                         <div className="flex gap-2">
                           <button
+                            onClick={() => window.open(`/admin/shipments/${shipment.id}/print`, '_blank')}
+                            className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
+                            title="Print Receipt"
+                          >
+                            <Printer className="w-4 h-4" />
+                          </button>
+                          <button
                             onClick={() => handleEdit(shipment)}
                             className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
                           >
@@ -247,8 +254,9 @@ export default function ShipmentManagement() {
                         name="trackingNumber"
                         type="text"
                         defaultValue={editingShipment?.trackingNumber}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                        placeholder={editingShipment ? '' : 'Auto-generated'}
+                        disabled={!editingShipment}
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none disabled:bg-gray-100 disabled:text-gray-500"
                       />
                     </div>
                     <div>

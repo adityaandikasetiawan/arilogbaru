@@ -335,8 +335,16 @@ app.get('/api/shipments', (req, res) => {
 })
 
 app.post('/api/shipments', (req, res) => {
-  const { id, trackingNumber, customer, origin, destination, weight, status, courier, createdDate, estimatedDelivery, notes } = req.body || {}
-  if (!id || !trackingNumber) return res.status(400).json({ error: 'invalid payload' })
+  let { id, trackingNumber, customer, origin, destination, weight, status, courier, createdDate, estimatedDelivery, notes } = req.body || {}
+  
+  if (!id) id = crypto.randomUUID()
+
+  if (!trackingNumber) {
+    const dateStr = new Date().toISOString().slice(2, 10).replace(/-/g, '') // YYMMDD
+    const randomStr = crypto.randomBytes(2).toString('hex').toUpperCase()
+    trackingNumber = `AIR${dateStr}${randomStr}`
+  }
+
   try {
     const stmt = db.prepare(
       'INSERT INTO shipments (id, trackingNumber, customer, origin, destination, weight, status, courier, createdDate, estimatedDelivery, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'

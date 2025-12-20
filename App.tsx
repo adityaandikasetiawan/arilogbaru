@@ -18,6 +18,8 @@ import UserManagement from './pages/admin/UserManagement';
 import Login from './pages/Login';
 import RequireAuth from './components/RequireAuth';
 
+import ShipmentReceipt from './pages/admin/ShipmentReceipt';
+
 export default function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -33,6 +35,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
         <Route path="/admin/shipments" element={<RequireAuth><ShipmentManagement /></RequireAuth>} />
+        <Route path="/admin/shipments/:id/print" element={<RequireAuth><ShipmentReceipt /></RequireAuth>} />
         <Route path="/admin/rates" element={<RequireAuth><RateManagement /></RequireAuth>} />
         <Route path="/admin/services" element={<RequireAuth><ServicesManagement /></RequireAuth>} />
         <Route path="/admin/banners" element={<RequireAuth><BannerManagement /></RequireAuth>} />

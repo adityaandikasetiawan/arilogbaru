@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search, Package, MapPin, Truck, CheckCircle2 } from 'lucide-react';
 import { Toaster, toast } from 'sonner@2.0.3';
 import Navbar from '../components/Navbar';
@@ -12,7 +13,22 @@ interface TrackingHistory {
   description: string;
 }
 
+interface Shipment {
+  id: string;
+  trackingNumber: string;
+  customer: string;
+  origin: string;
+  destination: string;
+  weight: number;
+  status: string;
+  courier: string;
+  createdDate: string;
+  estimatedDelivery: string;
+  notes: string;
+}
+
 export default function TrackingPage() {
+  const [searchParams] = useSearchParams();
   const [trackingNumber, setTrackingNumber] = useState('');
   const [trackingData, setTrackingData] = useState<{
     number: string;
@@ -23,61 +39,68 @@ export default function TrackingPage() {
     history: TrackingHistory[];
   } | null>(null);
 
+  useEffect(() => {
+    const number = searchParams.get('number');
+    if (number) {
+      setTrackingNumber(number);
+      fetchTrackingData(number);
+    }
+  }, [searchParams]);
+
+  const fetchTrackingData = async (number: string) => {
+    try {
+      const res = await fetch('/api/shipments');
+      if (res.ok) {
+        const data: Shipment[] = await res.json();
+        const found = data.find(s => s.trackingNumber === number);
+        
+        if (found) {
+          setTrackingData({
+            number: found.trackingNumber,
+            status: found.status,
+            origin: found.origin,
+            destination: found.destination,
+            estimatedDelivery: found.estimatedDelivery,
+            history: [
+              {
+                date: found.createdDate,
+                time: '08:00', // Mock time
+                location: found.origin,
+                status: 'Created',
+                description: 'Pesanan pengiriman telah dibuat',
+              },
+              // We could add more history if we had a history table, 
+              // but for now we only have current status.
+              // We can infer some history based on status.
+              ...(found.status !== 'Created' ? [{
+                date: found.createdDate, // Should ideally be updated date
+                time: '12:00',
+                location: found.origin,
+                status: found.status,
+                description: `Status terkini: ${found.status}`,
+              }] : [])
+            ],
+          });
+          toast.success('Data pengiriman ditemukan');
+        } else {
+          toast.error('Nomor resi tidak ditemukan');
+          setTrackingData(null);
+        }
+      } else {
+        toast.error('Gagal mengambil data pengiriman');
+      }
+    } catch (error) {
+      toast.error('Terjadi kesalahan koneksi');
+    }
+  };
+
   const handleTrack = (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!trackingNumber) {
       toast.error('Mohon masukkan nomor resi');
       return;
     }
-
-    // Mock tracking data
-    setTrackingData({
-      number: trackingNumber,
-      status: 'In Transit',
-      origin: 'Jakarta',
-      destination: 'Surabaya',
-      estimatedDelivery: '2024-11-29',
-      history: [
-        {
-          date: '2024-11-27',
-          time: '14:30',
-          location: 'Bandung Hub',
-          status: 'In Transit',
-          description: 'Paket sedang dalam perjalanan menuju kota tujuan',
-        },
-        {
-          date: '2024-11-27',
-          time: '09:15',
-          location: 'Jakarta Hub',
-          status: 'Departed',
-          description: 'Paket telah berangkat dari hub Jakarta',
-        },
-        {
-          date: '2024-11-26',
-          time: '16:45',
-          location: 'Jakarta Warehouse',
-          status: 'In Warehouse',
-          description: 'Paket telah tiba di warehouse dan siap untuk dikirim',
-        },
-        {
-          date: '2024-11-26',
-          time: '10:20',
-          location: 'Jakarta',
-          status: 'Picked Up',
-          description: 'Paket telah diambil oleh kurir',
-        },
-        {
-          date: '2024-11-26',
-          time: '08:00',
-          location: 'Jakarta',
-          status: 'Created',
-          description: 'Pesanan pengiriman telah dibuat',
-        },
-      ],
-    });
-
-    toast.success('Data pengiriman ditemukan');
+    fetchTrackingData(trackingNumber);
   };
 
   return (
