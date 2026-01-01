@@ -10,7 +10,7 @@ export default function ContactPage() {
       id: 1,
       icon: <Phone className="w-8 h-8 text-blue-600" />,
       title: 'Telepon',
-      details: ['+62 811 8798 168'],
+      details: ['+628118798168'],
     },
     {
       id: 2,

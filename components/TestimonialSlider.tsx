@@ -14,12 +14,14 @@ interface Testimonial {
   isActive: boolean;
 }
 
+const proxify = (url: string) => `/proxy-image?src=${encodeURIComponent(url)}`;
+
 const defaultTestimonials = [
   {
     id: '1',
     name: 'Budi Santoso',
     company: 'PT. Maju Jaya',
-    photo: 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    photo: proxify('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080'),
     message: 'Layanan yang sangat profesional dan cepat. Pengiriman spare parts kami selalu tepat waktu dan dalam kondisi sempurna. Sangat merekomendasikan!',
     rating: 5,
     isActive: true
@@ -28,7 +30,7 @@ const defaultTestimonials = [
     id: '2',
     name: 'Siti Nurhaliza',
     company: 'CV. Sentosa',
-    photo: 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    photo: proxify('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080'),
     message: 'Sudah 3 tahun kami menggunakan jasa mereka untuk e-commerce fulfillment. Sistem tracking yang real-time sangat membantu bisnis kami.',
     rating: 5,
     isActive: true
@@ -37,7 +39,7 @@ const defaultTestimonials = [
     id: '3',
     name: 'Ahmad Wijaya',
     company: 'PT. Global Tech',
-    photo: 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    photo: proxify('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080'),
     message: 'Harga kompetitif dan service excellent. Team customer service sangat responsif dan membantu menyelesaikan setiap kendala dengan cepat.',
     rating: 5,
     isActive: true
@@ -46,7 +48,7 @@ const defaultTestimonials = [
     id: '4',
     name: 'Diana Putri',
     company: 'Toko Online Berkah',
-    photo: 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    photo: proxify('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwY3VzdG9tZXJ8ZW58MXx8fHwxNzY0MjM2NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080'),
     message: 'Warehouse mereka sangat rapi dan terorganisir. Barang kami selalu aman dan pengelolaan inventory sangat transparan. Sangat puas!',
     rating: 5,
     isActive: true

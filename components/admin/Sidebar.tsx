@@ -10,6 +10,7 @@ import {
   Users,
   LogOut,
 } from 'lucide-react';
+import { Newspaper } from 'lucide-react';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -23,12 +24,14 @@ export default function Sidebar() {
   const menuItems = [
     { path: '/admin', icon: <LayoutDashboard className="w-5 h-5" />, label: 'Dashboard', perm: null },
     { path: '/admin/shipments', icon: <Package className="w-5 h-5" />, label: 'Shipments', perm: 'Shipments Management' },
+    { path: '/admin/vendors', icon: <Package className="w-5 h-5" />, label: 'Vendors', perm: 'Vendor Management' },
     { path: '/admin/rates', icon: <DollarSign className="w-5 h-5" />, label: 'Shipping Rates', perm: 'Rates Management' },
     { path: '/admin/services', icon: <Briefcase className="w-5 h-5" />, label: 'Services', perm: 'Services Management' },
     { path: '/admin/banners', icon: <Image className="w-5 h-5" />, label: 'Banners', perm: 'Banner Management' },
     { path: '/admin/testimonials', icon: <MessageSquare className="w-5 h-5" />, label: 'Testimonials', perm: 'Testimonials Management' },
     { path: '/admin/inquiries', icon: <Mail className="w-5 h-5" />, label: 'Inquiries', perm: 'Inquiries Management' },
     { path: '/admin/users', icon: <Users className="w-5 h-5" />, label: 'Users', perm: 'User Management' },
+    { path: '/admin/blog', icon: <Newspaper className="w-5 h-5" />, label: 'Blog', perm: 'Blog Management' },
   ];
 
   const filteredItems = menuItems.filter(item => {
@@ -49,8 +52,8 @@ export default function Sidebar() {
     <div className="w-64 bg-white h-screen fixed left-0 top-0 shadow-lg flex flex-col">
       <div className="p-6 border-b border-gray-200">
         <img 
-          src="/uploads/logo-main.webp" 
-          alt="PT Avantie Insyirah Raya" 
+          src="/logo-main.webp" 
+          alt="AIRLOG" 
           className="h-8 w-auto object-contain mb-2"
         />
         <p className="text-sm text-gray-600 mt-1">Admin Panel</p>

@@ -8,20 +8,33 @@ interface Shipment {
   id: string;
   trackingNumber: string;
   customer: string;
+  sender: string;
   origin: string;
   destination: string;
   weight: number;
+  coli: number;
   status: string;
-  courier: string;
+  service: string;
+  courier?: string;
+  vendorId?: string;
   createdDate: string;
   estimatedDelivery: string;
   notes: string;
+  description: string;
+  insurance: number;
+  packing: string;
 }
 
 export default function ShipmentReceipt() {
   const { id } = useParams();
   const [shipment, setShipment] = useState<Shipment | null>(null);
   const [loading, setLoading] = useState(true);
+  const [vendors, setVendors] = useState<{id:string;name:string;type:string}[]>([]);
+  const envAny = (import.meta as any)?.env || {};
+  const SITE_BASE =
+    (typeof envAny.VITE_SITE_BASE === 'string' && envAny.VITE_SITE_BASE.length > 0)
+      ? envAny.VITE_SITE_BASE
+      : window.location.origin;
 
   useEffect(() => {
     const fetchShipment = async () => {
@@ -40,19 +53,29 @@ export default function ShipmentReceipt() {
         setLoading(false);
       }
     };
+    const fetchVendors = async () => {
+      try {
+        const res = await fetch('/api/vendors');
+        if (res.ok) {
+          const data = await res.json();
+          setVendors(data);
+        }
+      } catch (e) {}
+    };
     fetchShipment();
+    fetchVendors();
   }, [id]);
 
   const handleShareWA = () => {
     if (!shipment) return;
-    const url = `${window.location.origin}/tracking?number=${shipment.trackingNumber}`;
+    const url = `${SITE_BASE}/tracking?number=${shipment.trackingNumber}`;
     const text = `Halo, ini resi pengiriman Anda.\nNo Resi: ${shipment.trackingNumber}\nCek status di: ${url}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const handleCopyLink = () => {
     if (!shipment) return;
-    const url = `${window.location.origin}/tracking?number=${shipment.trackingNumber}`;
+    const url = `${SITE_BASE}/tracking?number=${shipment.trackingNumber}`;
     navigator.clipboard.writeText(url);
     toast.success('Link tracking berhasil disalin');
   };
@@ -95,14 +118,10 @@ export default function ShipmentReceipt() {
         <div className="flex justify-between items-start mb-8 border-b border-gray-100 pb-8">
           <div className="flex items-center gap-4">
             <img
-              src="/uploads/logo-main.webp"
-              alt="PT Avantie Insyirah Raya"
+              src="/logo-main.webp"
+              alt="AIRLOG"
               className="h-16 w-auto object-contain"
             />
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">PT Avantie Insyirah Raya</h1>
-              <p className="text-sm text-gray-500 mt-1">Logistics & Supply Chain Solutions</p>
-            </div>
           </div>
           <div className="text-right">
             <h2 className="text-2xl font-bold text-blue-600 mb-1">RESI PENGIRIMAN</h2>
@@ -119,8 +138,8 @@ export default function ShipmentReceipt() {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <p className="font-semibold text-lg">{shipment.origin}</p>
-                <p className="text-sm text-gray-500 mt-1">Warehouse / Drop Point</p>
+                <p className="font-semibold text-lg">{shipment.sender || 'N/A'}</p>
+                <p className="text-sm text-gray-500 mt-1">{shipment.origin}</p>
               </div>
             </div>
           </div>
@@ -131,8 +150,8 @@ export default function ShipmentReceipt() {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <p className="font-semibold text-lg">{shipment.destination}</p>
-                <p className="text-sm text-gray-500 mt-1">{shipment.customer}</p>
+                <p className="font-semibold text-lg">{shipment.customer}</p>
+                <p className="text-sm text-gray-500 mt-1">{shipment.destination}</p>
               </div>
             </div>
           </div>
@@ -140,7 +159,7 @@ export default function ShipmentReceipt() {
 
         {/* Details Table */}
         <div className="bg-gray-50 rounded-xl p-6 mb-8 print:bg-transparent print:border print:border-gray-200">
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-3 gap-6 mb-6">
             <div>
               <p className="text-xs text-gray-500 mb-1">Tanggal</p>
               <p className="font-medium flex items-center gap-2">
@@ -153,16 +172,39 @@ export default function ShipmentReceipt() {
               <p className="font-medium">{shipment.weight} Kg</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-1">Layanan</p>
-              <p className="font-medium">{shipment.courier || 'Standard'}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 mb-1">Status</p>
-              <p className="font-medium">{shipment.status}</p>
+              <p className="text-xs text-gray-500 mb-1">Jumlah Koli</p>
+              <p className="font-medium">{shipment.coli || 1} Koli</p>
             </div>
           </div>
+
+          <div className="grid grid-cols-3 gap-6 border-t border-gray-200 pt-6">
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Layanan</p>
+              <p className="font-medium">{shipment.service || 'Standard'}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Packing</p>
+              <p className="font-medium">{shipment.packing || '-'}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Asuransi</p>
+              <p className="font-medium">{shipment.insurance ? `Rp ${shipment.insurance.toLocaleString()}` : '-'}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Vendor</p>
+              <p className="font-medium">{vendors.find(v => v.id === shipment.vendorId)?.name || '-'}</p>
+            </div>
+          </div>
+
+          {shipment.description && (
+             <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-xs text-gray-500 mb-1">Deskripsi Barang</p>
+                <p className="font-medium">{shipment.description}</p>
+             </div>
+          )}
+
           {shipment.estimatedDelivery && (
-             <div className="mt-4 pt-4 border-t border-gray-200">
+             <div className="mt-6 pt-6 border-t border-gray-200">
                 <p className="text-xs text-gray-500 mb-1">Estimasi Sampai</p>
                 <p className="font-medium">{shipment.estimatedDelivery}</p>
              </div>
@@ -174,16 +216,16 @@ export default function ShipmentReceipt() {
           <div className="text-sm text-gray-500 space-y-1">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4" />
-              <span>www.avantie.co.id</span>
+              <span>airlog.asia</span>
             </div>
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
-              <span>+62 21 1234 5678</span>
+              <span>+628118798168</span>
             </div>
           </div>
           <div className="text-center">
              <div className="bg-white p-2 rounded-lg border border-gray-100 inline-block">
-                <QRCode value={shipment.trackingNumber} size={80} />
+                <QRCode value={`${SITE_BASE}/tracking?number=${encodeURIComponent(shipment.trackingNumber)}`} size={80} />
              </div>
              <p className="text-xs text-gray-400 mt-1">Scan untuk lacak</p>
           </div>

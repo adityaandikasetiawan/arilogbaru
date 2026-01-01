@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Teknologi AI dalam Dunia Logistik Modern",
+    "slug": "teknologi-ai-dalam-dunia-logistik-modern",
+    "imageUrl": "/proxy-image?src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1761195696590-3490ea770aa1%3Fcrop%3Dentropy%26cs%3Dtinysrgb%26fit%3Dmax%26fm%3Djpg%26w%3D1080",
+    "category": "Teknologi",
+    "author": "Ahmad Wijaya",
+    "date": "15 Des 2024",
+    "readTime": "5 menit",
+    "featured": true,
+    "content": "Konten lengkap artikel AI"
+  },
+  {
+    "id": "2",
+    "title": "Tips Mengemas Paket agar Aman Saat Pengiriman",
+    "slug": "tips-mengemas-paket-agar-aman",
+    "imageUrl": "/proxy-image?src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1755606396356-bdd7cd95df75%3Fcrop%3Dentropy%26cs%3Dtinysrgb%26fit%3Dmax%26fm%3Djpg%26w%3D1080",
+    "category": "Tips & Trik",
+    "author": "Siti Nurhaliza",
+    "date": "12 Des 2024",
+    "readTime": "4 menit",
+    "featured": true,
+    "content": "Konten lengkap tips mengemas"
+  },
+  {
+    "id": "3",
+    "title": "Tren E-Commerce dan Dampaknya pada Logistik",
+    "slug": "tren-e-commerce-dan-dampaknya",
+    "imageUrl": "/proxy-image?src=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1627309366653-2dedc084cdf1%3Fcrop%3Dentropy%26cs%3Dtinysrgb%26fit%3Dmax%26fm%3Djpg%26w%3D1080",
+    "category": "Industri",
+    "author": "Budi Santoso",
+    "date": "10 Des 2024",
+    "readTime": "6 menit",
+    "featured": false,
+    "content": "Konten lengkap tren e-commerce"
+  }
+]

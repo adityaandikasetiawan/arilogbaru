@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Package, Droplet, Warehouse, Radio, ShoppingBag, Truck, Plane, Ship, Home, Clock, Shield, DollarSign, MapPin } from 'lucide-react';
+import { Package, Droplet, Warehouse, Radio, ShoppingBag, Plane, Ship, Home, Clock, Shield, DollarSign, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 
 // Icon mapping
 const iconMap: { [key: string]: any } = {
-  Package, Droplet, Warehouse, Radio, ShoppingBag, Truck, Plane, Ship, Home, Clock, Shield, DollarSign, MapPin
+  Package, Droplet, Warehouse, Radio, ShoppingBag, Plane, Ship, Home, Clock, Shield, DollarSign, MapPin
 };
 
 interface Service {

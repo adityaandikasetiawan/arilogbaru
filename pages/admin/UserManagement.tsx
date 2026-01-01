@@ -18,6 +18,8 @@ export default function UserManagement() {
 
   const [showModal, setShowModal] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [roleSelection, setRoleSelection] = useState<User['role']>('Operator');
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
 
   const allPermissions = [
     'Shipments Management',
@@ -27,7 +29,24 @@ export default function UserManagement() {
     'Testimonials Management',
     'Inquiries Management',
     'User Management',
+    'Vendor Management',
+    'Blog Management',
   ];
+
+  const ROLE_PRESETS: Record<User['role'], string[]> = {
+    'Super Admin': [...allPermissions],
+    Admin: [
+      'Shipments Management',
+      'Rates Management',
+      'Services Management',
+      'Banner Management',
+      'Testimonials Management',
+      'Inquiries Management',
+      'Vendor Management',
+      'Blog Management',
+    ],
+    Operator: ['Shipments Management', 'Inquiries Management'],
+  };
 
   const fetchUsers = async () => {
     try {
@@ -66,11 +85,15 @@ export default function UserManagement() {
   const handleEdit = (user: User) => {
     setEditingUser(user);
     setShowModal(true);
+    setRoleSelection(user.role);
+    setSelectedPermissions(user.permissions || []);
   };
 
   const handleAdd = () => {
     setEditingUser(null);
     setShowModal(true);
+    setRoleSelection('Admin');
+    setSelectedPermissions(ROLE_PRESETS['Admin']);
   };
 
   const getRoleColor = (role: string) => {
@@ -202,10 +225,9 @@ export default function UserManagement() {
                     e.preventDefault();
                     const form = e.currentTarget as HTMLFormElement;
                     const fd = new FormData(form);
-                    const permissions = (fd.getAll('permissions') as string[]) || [];
                     const name = ((fd.get('name') as string) || editingUser?.name || '').trim();
                     const email = ((fd.get('email') as string) || editingUser?.email || '').trim();
-                    const role = ((fd.get('role') as string) || editingUser?.role || 'Operator') as User['role'];
+                    const role = roleSelection as User['role'];
                     const status = ((fd.get('status') as string) || editingUser?.status || 'active') as User['status'];
                     const password = ((fd.get('password') as string) || '').trim();
                     if (!name) {
@@ -238,7 +260,7 @@ export default function UserManagement() {
                       name,
                       email,
                       role,
-                      permissions,
+                      permissions: selectedPermissions,
                       lastActive:
                         editingUser?.lastActive || new Date().toISOString().slice(0, 16).replace('T', ' '),
                       status,
@@ -300,7 +322,14 @@ export default function UserManagement() {
                       <label className="block text-gray-700 mb-2">Role</label>
                       <select
                         name="role"
-                        defaultValue={editingUser?.role}
+                        value={roleSelection}
+                        onChange={(e) => {
+                          const r = e.target.value as User['role'];
+                          setRoleSelection(r);
+                          if (!editingUser) {
+                            setSelectedPermissions(ROLE_PRESETS[r] || []);
+                          }
+                        }}
                         className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
                       >
                         <option value="Super Admin">Super Admin</option>
@@ -341,7 +370,13 @@ export default function UserManagement() {
                             name="permissions"
                             value={permission}
                             type="checkbox"
-                            defaultChecked={editingUser?.permissions.includes(permission)}
+                            checked={selectedPermissions.includes(permission)}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+                              setSelectedPermissions((prev) =>
+                                checked ? [...prev, permission] : prev.filter((p) => p !== permission)
+                              );
+                            }}
                             className="w-4 h-4 text-blue-600 rounded"
                           />
                           <span className="text-sm text-gray-700">{permission}</span>

@@ -125,12 +125,16 @@ export default function ServicesManagement() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => (
               <div key={service.id} className="bg-white rounded-xl p-6 shadow-sm">
-                <div className="mb-4 h-40 bg-gray-200 rounded-lg overflow-hidden">
-                  <img
-                    src={service.photo}
-                    alt={service.title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="mb-4 h-40 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+                  {service.photo ? (
+                    <img
+                      src={service.photo}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-gray-500 text-sm">No Image</span>
+                  )}
                 </div>
                 <h3 className="mb-2">{service.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{service.description}</p>

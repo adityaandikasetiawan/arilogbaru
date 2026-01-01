@@ -25,12 +25,22 @@ export default function RequireAuth({ children }: { children: ReactNode }) {
           localStorage.setItem('auth_user', JSON.stringify(data.user))
           setAuthorized(true)
         } else {
-          localStorage.removeItem('auth_token')
-          localStorage.removeItem('auth_user')
-          navigate('/login', { replace: true })
+          const userStr = localStorage.getItem('auth_user')
+          if (userStr) {
+            setAuthorized(true)
+          } else {
+            localStorage.removeItem('auth_token')
+            localStorage.removeItem('auth_user')
+            navigate('/login', { replace: true })
+          }
         }
       } catch {
-        navigate('/login', { replace: true })
+        const userStr = localStorage.getItem('auth_user')
+        if (userStr) {
+          setAuthorized(true)
+        } else {
+          navigate('/login', { replace: true })
+        }
       }
     }
     verify()

@@ -13,34 +13,36 @@ interface Slide {
   ctaLink?: string;
 }
 
+const proxify = (url: string) => `/proxy-image?src=${encodeURIComponent(url)}`;
+
 const defaultSlides: Slide[] = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1713859326033-f75e04439c3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMHRydWNrJTIwbG9naXN0aWNzfGVufDF8fHx8MTc2NDE4MDc1OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: proxify('https://images.unsplash.com/photo-1713859326033-f75e04439c3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMHRydWNrJTIwbG9naXN0aWNzfGVufDF8fHx8MTc2NDE4MDc1OHww&ixlib=rb-4.1.0&q=80&w=1080'),
     headline: 'Solusi Logistik Terpercaya',
     subheadline: 'Pengiriman cepat dan aman ke seluruh Indonesia',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1672870152741-e526cfe5419b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMHBvcnQlMjBjb250YWluZXJzfGVufDF8fHx8MTc2NDIzNjU3NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: proxify('https://images.unsplash.com/photo-1672870152741-e526cfe5419b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMHBvcnQlMjBjb250YWluZXJzfGVufDF8fHx8MTc2NDIzNjU3NHww&ixlib=rb-4.1.0&q=80&w=1080'),
     headline: 'Pengiriman Internasional',
     subheadline: 'Jangkauan global dengan jaringan pelabuhan terluas',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXJlaG91c2UlMjBzdG9yYWdlfGVufDF8fHx8MTc2NDE2NTE4M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: proxify('https://images.unsplash.com/photo-1553413077-190dd305871c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXJlaG91c2UlMjBzdG9yYWdlfGVufDF8fHx8MTc2NDE2NTE4M3ww&ixlib=rb-4.1.0&q=80&w=1080'),
     headline: 'Gudang & Distribusi',
     subheadline: 'Fasilitas penyimpanan modern dengan sistem terintegrasi',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1571086291540-b137111fa1c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMGFpcnBsYW5lfGVufDF8fHx8MTc2NDIzNjU3NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: proxify('https://images.unsplash.com/photo-1571086291540-b137111fa1c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMGFpcnBsYW5lfGVufDF8fHx8MTc2NDIzNjU3NHww&ixlib=rb-4.1.0&q=80&w=1080'),
     headline: 'Kargo Udara Express',
     subheadline: 'Pengiriman kilat untuk kebutuhan mendesak Anda',
   },
   {
     id: 5,
-    image: 'https://images.unsplash.com/photo-1561702469-c4239ced3f47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjB5YXJkfGVufDF8fHx8MTc2NDE0Mjg0M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: proxify('https://images.unsplash.com/photo-1561702469-c4239ced3f47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjB5YXJkfGVufDF8fHx8MTc2NDE0Mjg0M3ww&ixlib=rb-4.1.0&q=80&w=1080'),
     headline: 'Kontainer & Kargo Besar',
     subheadline: 'Layanan full container untuk kebutuhan industri',
   },

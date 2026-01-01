@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Package, Truck, CheckCircle, RotateCcw, TrendingUp, Plus } from 'lucide-react';
+import { Package, CheckCircle, RotateCcw, TrendingUp, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/admin/Sidebar';
 
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
       id: 2,
       title: 'In Transit',
       value: inTransit.toString(),
-      icon: <Truck className="w-8 h-8 text-orange-600" />,
+      icon: <Package className="w-8 h-8 text-orange-600" />,
       bgColor: 'bg-orange-50',
       change: 'Active',
     },

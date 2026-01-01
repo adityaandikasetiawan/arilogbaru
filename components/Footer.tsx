@@ -59,8 +59,8 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-6">
               <img 
-                src="/uploads/logo-main.webp" 
-                alt="PT Avantie Insyirah Raya" 
+                src="/logo-main.webp" 
+                alt="AIRLOG" 
                 className="h-10 w-auto object-contain brightness-0 invert"
               />
             </div>
@@ -135,7 +135,7 @@ export default function Footer() {
                 <div className="p-2 bg-gradient-to-br from-blue-600 to-blue-500 rounded-lg group-hover:scale-110 transition-transform">
                   <Phone className="w-4 h-4 text-white flex-shrink-0" />
                 </div>
-                <span className="text-gray-400">+62 811 8798 168</span>
+                <span className="text-gray-400">+628118798168</span>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="p-2 bg-gradient-to-br from-orange-600 to-orange-500 rounded-lg group-hover:scale-110 transition-transform">

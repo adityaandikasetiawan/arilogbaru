@@ -1,9 +1,11 @@
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Toaster } from 'sonner@2.0.3';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Calendar, User, Tag, ArrowRight, Search, TrendingUp } from 'lucide-react';
+import { Calendar, User, Tag, ArrowRight, Search, TrendingUp, Clock } from 'lucide-react';
+import blogsData from '../data/blogs.json';
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('Semua');
@@ -11,101 +13,12 @@ export default function BlogPage() {
 
   const categories = ['Semua', 'Tips & Trik', 'Teknologi', 'Industri', 'Berita'];
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'Teknologi AI dalam Dunia Logistik Modern',
-      excerpt: 'Bagaimana kecerdasan buatan mengubah cara kerja industri logistik dan meningkatkan efisiensi operasional.',
-      image: 'https://images.unsplash.com/photo-1761195696590-3490ea770aa1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsb2dpc3RpY3MlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc2NTgxMTcyN3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Teknologi',
-      author: 'Ahmad Wijaya',
-      date: '15 Des 2024',
-      readTime: '5 menit',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Tips Mengemas Paket agar Aman Saat Pengiriman',
-      excerpt: 'Panduan lengkap cara mengemas barang dengan benar untuk memastikan paket sampai dengan aman.',
-      image: 'https://images.unsplash.com/photo-1755606396356-bdd7cd95df75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlY29tbWVyY2UlMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY1ODYyOTU5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Tips & Trik',
-      author: 'Siti Nurhaliza',
-      date: '12 Des 2024',
-      readTime: '4 menit',
-      featured: true
-    },
-    {
-      id: 3,
-      title: 'Tren E-Commerce dan Dampaknya pada Logistik',
-      excerpt: 'Analisis mendalam tentang pertumbuhan e-commerce di Indonesia dan tantangan logistik yang menyertainya.',
-      image: 'https://images.unsplash.com/photo-1627309366653-2dedc084cdf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdXBwbHklMjBjaGFpbnxlbnwxfHx8fDE3NjU4NjI5NTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Industri',
-      author: 'Budi Santoso',
-      date: '10 Des 2024',
-      readTime: '6 menit',
-      featured: false
-    },
-    {
-      id: 4,
-      title: 'Memilih Layanan Pengiriman yang Tepat untuk Bisnis',
-      excerpt: 'Faktor-faktor penting yang perlu dipertimbangkan saat memilih jasa pengiriman untuk bisnis Anda.',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsb2dpc3RpY3MlMjB3YXJlaG91c2V8ZW58MXx8fHwxNzY1ODM0OTgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Tips & Trik',
-      author: 'Dewi Lestari',
-      date: '8 Des 2024',
-      readTime: '5 menit',
-      featured: false
-    },
-    {
-      id: 5,
-      title: 'Inovasi Sistem Tracking Real-Time di PT Avantie Insyirah Raya',
-      excerpt: 'Mengenal lebih dalam teknologi tracking terbaru yang memudahkan Anda memantau pengiriman.',
-      image: 'https://images.unsplash.com/photo-1748346918817-0b1b6b2f9bab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjB0ZWFtfGVufDF8fHx8MTc2NTgxNTU1OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Teknologi',
-      author: 'Ahmad Wijaya',
-      date: '5 Des 2024',
-      readTime: '4 menit',
-      featured: false
-    },
-    {
-      id: 6,
-      title: 'Strategi Mengurangi Biaya Pengiriman untuk UMKM',
-      excerpt: 'Tips hemat untuk pelaku UMKM dalam mengelola biaya logistik tanpa mengorbankan kualitas.',
-      image: 'https://images.unsplash.com/photo-1724770388461-58567b88f395?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGRlbGl2ZXJ5fGVufDF8fHx8MTc2NTg2MjgzOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Tips & Trik',
-      author: 'Siti Nurhaliza',
-      date: '1 Des 2024',
-      readTime: '5 menit',
-      featured: false
-    },
-    {
-      id: 7,
-      title: 'Regulasi Baru Pengiriman Barang Berbahaya',
-      excerpt: 'Update terbaru peraturan pengiriman barang berbahaya dan cara mematuhinya.',
-      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGhhbmRzaGFrZXxlbnwxfHx8fDE3NjU4MDc1MDN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Berita',
-      author: 'Budi Santoso',
-      date: '28 Nov 2024',
-      readTime: '6 menit',
-      featured: false
-    },
-    {
-      id: 8,
-      title: 'Keberlanjutan dalam Industri Logistik',
-      excerpt: 'Langkah-langkah menuju logistik ramah lingkungan dan berkelanjutan.',
-      image: 'https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBtZWV0aW5nfGVufDF8fHx8MTc2NTgxNjI1M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      category: 'Industri',
-      author: 'Dewi Lestari',
-      date: '25 Nov 2024',
-      readTime: '7 menit',
-      featured: false
-    }
-  ];
+  const [blogPosts, setBlogPosts] = useState<any[]>(blogsData as any);
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = selectedCategory === 'Semua' || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+                         (post.slug || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -209,7 +122,7 @@ export default function BlogPage() {
                   <div className="relative h-64 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
                     <img
-                      src={post.image}
+                      src={post.imageUrl}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -223,7 +136,6 @@ export default function BlogPage() {
                     <h3 className="text-2xl mb-3 bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent group-hover:from-orange-500 group-hover:to-blue-600 transition-all">
                       {post.title}
                     </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">{post.excerpt}</p>
                     <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
@@ -235,12 +147,15 @@ export default function BlogPage() {
                           <span>{post.date}</span>
                         </div>
                       </div>
-                      <span>{post.readTime}</span>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        <span>{post.readTime}</span>
+                      </div>
                     </div>
-                    <button className="flex items-center gap-2 text-blue-600 hover:text-orange-500 transition-colors group">
+                    <Link to={`/blog/${post.slug || post.id}`} className="flex items-center gap-2 text-blue-600 hover:text-orange-500 transition-colors group">
                       Baca Selengkapnya
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   </div>
                 </motion.article>
               ))}
@@ -273,7 +188,7 @@ export default function BlogPage() {
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={post.image}
+                      src={proxify(post.imageUrl)}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -287,15 +202,14 @@ export default function BlogPage() {
                     <h3 className="text-lg mb-2 bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent line-clamp-2 group-hover:from-orange-500 group-hover:to-blue-600 transition-all">
                       {post.title}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
                       <span>{post.date}</span>
                       <span>{post.readTime}</span>
                     </div>
-                    <button className="flex items-center gap-2 text-sm text-blue-600 hover:text-orange-500 transition-colors group">
+                    <Link to={`/blog/${post.slug || post.id}`} className="flex items-center gap-2 text-sm text-blue-600 hover:text-orange-500 transition-colors group">
                       Baca
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   </div>
                 </motion.article>
               ))}

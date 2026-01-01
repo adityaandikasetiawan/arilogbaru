@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Award, Users, Target, Globe, TrendingUp, Shield, Package, Heart } from 'lucide-react';
 
+const proxify = (url: string) => `/proxy-image?src=${encodeURIComponent(url)}`;
+
 export default function AboutUsPage() {
   const stats = [
     { icon: Package, value: '10,000+', label: 'Pengiriman/Bulan' },
@@ -36,7 +38,7 @@ export default function AboutUsPage() {
   ];
 
   const timeline = [
-    { year: '2009', title: 'Berdiri', description: 'PT Avantie Insyirah Raya didirikan dengan visi menjadi solusi logistik terpercaya' },
+    { year: '2009', title: 'Berdiri', description: 'AIRLOG didirikan dengan visi menjadi solusi logistik terpercaya' },
     { year: '2012', title: 'Ekspansi Nasional', description: 'Membuka cabang di 10 kota besar Indonesia' },
     { year: '2016', title: 'Teknologi Digital', description: 'Meluncurkan sistem tracking digital dan aplikasi mobile' },
     { year: '2020', title: 'ISO Certification', description: 'Mendapatkan sertifikasi ISO 9001:2015 untuk sistem manajemen mutu' },
@@ -47,22 +49,22 @@ export default function AboutUsPage() {
     {
       name: 'Budi Santoso',
       position: 'CEO & Founder',
-      image: 'https://images.unsplash.com/photo-1748346918817-0b1b6b2f9bab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjB0ZWFtfGVufDF8fHx8MTc2NTgxNTU1OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: proxify('https://images.unsplash.com/photo-1748346918817-0b1b6b2f9bab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjB0ZWFtfGVufDF8fHx8MTc2NTgxNTU1OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')
     },
     {
       name: 'Siti Nurhaliza',
       position: 'COO',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsb2dpc3RpY3MlMjB3YXJlaG91c2V8ZW58MXx8fHwxNzY1ODM0OTgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: proxify('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsb2dpc3RpY3MlMjB3YXJlaG91c2V8ZW58MXx8fHwxNzY1ODM0OTgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')
     },
     {
       name: 'Ahmad Wijaya',
       position: 'Head of Operations',
-      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGhhbmRzaGFrZXxlbnwxfHx8fDE3NjU4MDc1MDN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: proxify('https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGhhbmRzaGFrZXxlbnwxfHx8fDE3NjU4MDc1MDN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')
     },
     {
       name: 'Dewi Lestari',
       position: 'Head of Customer Service',
-      image: 'https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBtZWV0aW5nfGVufDF8fHx8MTc2NTgxNjI1M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: proxify('https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBtZWV0aW5nfGVufDF8fHx8MTc2NTgxNjI1M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')
     }
   ];
 
@@ -95,7 +97,7 @@ export default function AboutUsPage() {
               Partner Logistik Terpercaya Anda
             </h1>
             <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-              At PT Avantie Insyirah Raya, our key capabilities revolve around delivering exceptional logistics solutions that prioritize customer satisfaction and long-term partnerships. We are committed to seamless logistics and boundless integrity, ensuring that our clients can rely on our services to streamline their supply chain operations.
+              At Airlog, our key capabilities revolve around delivering exceptional logistics solutions that prioritize customer satisfaction and long-term partnerships. We are committed to seamless logistics and boundless integrity, ensuring that our clients can rely on our services to streamline their supply chain operations.
             </p>
           </motion.div>
 
@@ -254,7 +256,7 @@ export default function AboutUsPage() {
               Perjalanan Kami
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Milestone penting dalam sejarah PT Avantie Insyirah Raya
+              Milestone penting dalam sejarah AIRLOG
             </p>
           </motion.div>
 

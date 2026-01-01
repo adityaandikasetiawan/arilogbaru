@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Calculator, Package } from 'lucide-react';
 import { Toaster, toast } from 'sonner@2.0.3';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import LocationSearchInput from '../components/LocationSearchInput';
 
 export default function ShippingRatePage() {
   const [formData, setFormData] = useState({
@@ -11,24 +12,12 @@ export default function ShippingRatePage() {
     weight: '',
     service: 'regular',
   });
+
   const [rateResult, setRateResult] = useState<{
     cost: number;
     eta: string;
     service: string;
   } | null>(null);
-
-  const cities = [
-    'Jakarta',
-    'Surabaya',
-    'Bandung',
-    'Medan',
-    'Semarang',
-    'Makassar',
-    'Palembang',
-    'Tangerang',
-    'Depok',
-    'Bekasi',
-  ];
 
   const services = [
     { value: 'regular', label: 'Regular (3-5 hari)', multiplier: 1 },
@@ -93,43 +82,23 @@ export default function ShippingRatePage() {
             <div className="bg-white rounded-2xl p-8 shadow-lg">
               <form onSubmit={handleCalculate}>
                 <div className="mb-6">
-                  <label htmlFor="origin" className="block text-gray-700 mb-2">
-                    Kota Asal
-                  </label>
-                  <select
-                    id="origin"
+                  <LocationSearchInput
+                    label="Kota Asal"
                     name="origin"
-                    value={formData.origin}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
-                  >
-                    <option value="">Pilih Kota Asal</option>
-                    {cities.map((city) => (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
+                    defaultValue={formData.origin}
+                    placeholder="Cari kota/kecamatan/kode pos"
+                    onChange={(val) => setFormData({ ...formData, origin: val })}
+                  />
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="destination" className="block text-gray-700 mb-2">
-                    Kota Tujuan
-                  </label>
-                  <select
-                    id="destination"
+                  <LocationSearchInput
+                    label="Kota Tujuan"
                     name="destination"
-                    value={formData.destination}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
-                  >
-                    <option value="">Pilih Kota Tujuan</option>
-                    {cities.map((city) => (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
+                    defaultValue={formData.destination}
+                    placeholder="Cari kota/kecamatan/kode pos"
+                    onChange={(val) => setFormData({ ...formData, destination: val })}
+                  />
                 </div>
 
                 <div className="mb-6">

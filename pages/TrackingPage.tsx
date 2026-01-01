@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Search, Package, MapPin, Truck, CheckCircle2 } from 'lucide-react';
+import { Search, Package, MapPin, CheckCircle2 } from 'lucide-react';
 import { Toaster, toast } from 'sonner@2.0.3';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -170,7 +170,7 @@ export default function TrackingPage() {
                   <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div className="h-full bg-blue-600 rounded-full" style={{ width: '60%' }} />
                   </div>
-                  <Truck className="w-5 h-5 text-blue-600" />
+                  <Package className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
 

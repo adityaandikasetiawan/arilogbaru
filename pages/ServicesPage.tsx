@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { 
   Package, 
-  Truck, 
   Plane, 
   Ship, 
   Building2, 
@@ -36,7 +35,7 @@ export default function ServicesPage() {
       price: 'Mulai dari Rp 15.000'
     },
     {
-      icon: Truck,
+      icon: Package,
       title: 'Pengiriman Kargo',
       description: 'Solusi pengiriman untuk barang dalam jumlah besar',
       features: [

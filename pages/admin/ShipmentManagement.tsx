@@ -2,30 +2,60 @@ import { useState, useEffect } from 'react';
 import { Search, Edit, Plus, Trash2, MapPin, Printer } from 'lucide-react';
 import { toast, Toaster } from 'sonner@2.0.3';
 import Sidebar from '../../components/admin/Sidebar';
+import LocationSearchInput from '../../components/LocationSearchInput';
 
 interface Shipment {
   id: string;
   trackingNumber: string;
   customer: string;
+  sender: string;
   origin: string;
   destination: string;
   weight: number;
+  coli: number;
   status: string;
-  courier: string;
+  service: string;
+  courier?: string;
+  vendorId?: string;
   createdDate: string;
   estimatedDelivery: string;
   notes: string;
+  description: string;
+  insurance: number;
+  packing: string;
 }
+
+interface Location {
+  id: string;
+  zipCode: string;
+  city: string;
+  district: string;
+  province: string;
+}
+
+interface Vendor {
+  id: string;
+  name: string;
+  type: string;
+}
+
+interface ServiceItem {
+  id: string;
+  title: string;
+}
+
 
 export default function ShipmentManagement() {
   const [shipments, setShipments] = useState<Shipment[]>([]);
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [services, setServices] = useState<ServiceItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingShipment, setEditingShipment] = useState<Shipment | null>(null);
 
-  const fetchShipments = async () => {
+  const fetchShipments = async (signal?: AbortSignal) => {
     try {
-      const res = await fetch('/api/shipments');
+      const res = await fetch('/api/shipments', { signal });
       if (res.ok) {
         const data = await res.json();
         setShipments(data);
@@ -33,12 +63,51 @@ export default function ShipmentManagement() {
         toast.error('Failed to fetch shipments');
       }
     } catch (error) {
+      if ((error as any)?.name === 'AbortError') return;
       toast.error('Error connecting to server');
     }
   };
 
+  const fetchVendors = async (signal?: AbortSignal) => {
+    try {
+      const res = await fetch('/api/vendors', { signal });
+      if (res.ok) {
+        const data = await res.json();
+        setVendors(data);
+      }
+    } catch (error) {
+      if ((error as any)?.name === 'AbortError') return;
+      console.error('Failed to fetch vendors');
+    }
+  };
+
+  const fetchServices = async (signal?: AbortSignal) => {
+    try {
+      const res = await fetch('/api/services', { signal });
+      if (res.ok) {
+        const data = await res.json();
+        setServices(data.map((s: any) => ({ id: s.id, title: s.title })));
+      }
+    } catch (error) {
+      if ((error as any)?.name === 'AbortError') return;
+      console.error('Failed to fetch services');
+    }
+  };
+
   useEffect(() => {
-    fetchShipments();
+    const c1 = new AbortController();
+    const c2 = new AbortController();
+    const c3 = new AbortController();
+
+    fetchShipments(c1.signal);
+    fetchVendors(c2.signal);
+    fetchServices(c3.signal);
+
+    return () => {
+      c1.abort();
+      c2.abort();
+      c3.abort();
+    };
   }, []);
 
   const statuses = [
@@ -93,19 +162,26 @@ export default function ShipmentManagement() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const vendorId = formData.get('vendorId') as string;
     
     const shipmentData = {
       id: editingShipment ? editingShipment.id : Date.now().toString(),
       trackingNumber: formData.get('trackingNumber') as string,
       customer: formData.get('customer') as string,
+      sender: formData.get('sender') as string,
       origin: formData.get('origin') as string,
       destination: formData.get('destination') as string,
       weight: parseFloat(formData.get('weight') as string),
+      coli: parseInt(formData.get('coli') as string) || 1,
       status: formData.get('status') as string,
-      courier: formData.get('courier') as string,
+      service: (formData.get('service') as string) || '',
+      vendorId: vendorId,
       createdDate: editingShipment ? editingShipment.createdDate : new Date().toISOString().split('T')[0],
       estimatedDelivery: formData.get('estimatedDelivery') as string,
       notes: formData.get('notes') as string,
+      description: formData.get('description') as string,
+      insurance: parseFloat(formData.get('insurance') as string) || 0,
+      packing: formData.get('packing') as string,
     };
 
     try {
@@ -181,9 +257,10 @@ export default function ShipmentManagement() {
                     <th className="px-6 py-4 text-left text-sm text-gray-600">Tracking #</th>
                     <th className="px-6 py-4 text-left text-sm text-gray-600">Customer</th>
                     <th className="px-6 py-4 text-left text-sm text-gray-600">Route</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Weight</th>
+                    <th className="px-6 py-4 text-left text-sm text-gray-600">Details</th>
                     <th className="px-6 py-4 text-left text-sm text-gray-600">Status</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Courier</th>
+                    <th className="px-6 py-4 text-left text-sm text-gray-600">Service</th>
+                    <th className="px-6 py-4 text-left text-sm text-gray-600">Vendor</th>
                     <th className="px-6 py-4 text-left text-sm text-gray-600">ETA</th>
                     <th className="px-6 py-4 text-left text-sm text-gray-600">Actions</th>
                   </tr>
@@ -195,7 +272,10 @@ export default function ShipmentManagement() {
                         <p className="text-gray-900">{shipment.trackingNumber}</p>
                         <p className="text-xs text-gray-500">{shipment.createdDate}</p>
                       </td>
-                      <td className="px-6 py-4 text-gray-900">{shipment.customer}</td>
+                      <td className="px-6 py-4 text-gray-900">
+                        <div>{shipment.customer}</div>
+                        <div className="text-xs text-gray-500">From: {shipment.sender}</div>
+                      </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <span>{shipment.origin}</span>
@@ -203,13 +283,17 @@ export default function ShipmentManagement() {
                           <span>{shipment.destination}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-gray-900">{shipment.weight} kg</td>
+                      <td className="px-6 py-4 text-gray-900">
+                        <div>{shipment.weight} kg</div>
+                        <div className="text-xs text-gray-500">{shipment.coli} koli</div>
+                      </td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-xs ${getStatusColor(shipment.status)}`}>
                           {shipment.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-gray-900">{shipment.courier}</td>
+                      <td className="px-6 py-4 text-gray-900">{shipment.service || ''}</td>
+                      <td className="px-6 py-4 text-gray-900">{vendors.find(v => v.id === shipment.vendorId)?.name || '-'}</td>
                       <td className="px-6 py-4 text-gray-900">{shipment.estimatedDelivery}</td>
                       <td className="px-6 py-4">
                         <div className="flex gap-2">
@@ -241,98 +325,188 @@ export default function ShipmentManagement() {
             </div>
           </div>
 
-          {/* Modal Placeholder */}
+          {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="bg-white rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 <h2 className="mb-6">{editingShipment ? 'Edit Shipment' : 'Add New Shipment'}</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-gray-700 mb-2">Tracking Number</label>
-                      <input
-                        name="trackingNumber"
-                        type="text"
-                        defaultValue={editingShipment?.trackingNumber}
-                        placeholder={editingShipment ? '' : 'Auto-generated'}
-                        disabled={!editingShipment}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none disabled:bg-gray-100 disabled:text-gray-500"
-                      />
+                    {/* Column 1 */}
+                    <div className="space-y-4">
+                        <div>
+                          <label className="block text-gray-700 mb-2">Tracking Number</label>
+                          <input
+                            name="trackingNumber"
+                            type="text"
+                            defaultValue={editingShipment?.trackingNumber}
+                            placeholder={editingShipment ? '' : 'Auto-generated'}
+                            disabled={!editingShipment}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none disabled:bg-gray-100 disabled:text-gray-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-gray-700 mb-2">Sender (Pengirim)</label>
+                          <input
+                            name="sender"
+                            type="text"
+                            defaultValue={editingShipment?.sender}
+                            placeholder="Sender Name"
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-gray-700 mb-2">Customer (Penerima)</label>
+                          <input
+                            name="customer"
+                            type="text"
+                            defaultValue={editingShipment?.customer}
+                            placeholder="Receiver Name"
+                            required
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <LocationSearchInput
+                            label="Origin"
+                            name="origin"
+                            defaultValue={editingShipment?.origin}
+                            placeholder="Type zip code or city name..."
+                          />
+                        </div>
+                        <div>
+                          <LocationSearchInput
+                            label="Destination"
+                            name="destination"
+                            defaultValue={editingShipment?.destination}
+                            placeholder="Type zip code or city name..."
+                          />
+                        </div>
                     </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Customer</label>
-                      <input
-                        name="customer"
-                        type="text"
-                        defaultValue={editingShipment?.customer}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Origin</label>
-                      <input
-                        name="origin"
-                        type="text"
-                        defaultValue={editingShipment?.origin}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Destination</label>
-                      <input
-                        name="destination"
-                        type="text"
-                        defaultValue={editingShipment?.destination}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Weight (kg)</label>
-                      <input
-                        name="weight"
-                        type="number"
-                        step="0.1"
-                        defaultValue={editingShipment?.weight}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Status</label>
-                      <select
-                        name="status"
-                        defaultValue={editingShipment?.status || 'Created'}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      >
-                        {statuses.map((status) => (
-                          <option key={status} value={status}>
-                            {status}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Courier</label>
-                      <input
-                        name="courier"
-                        type="text"
-                        defaultValue={editingShipment?.courier}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">Estimated Delivery</label>
-                      <input
-                        name="estimatedDelivery"
-                        type="date"
-                        defaultValue={editingShipment?.estimatedDelivery}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
-                      />
+
+                    {/* Column 2 */}
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-gray-700 mb-2">Weight (kg)</label>
+                              <input
+                                name="weight"
+                                type="number"
+                                step="0.1"
+                                defaultValue={editingShipment?.weight}
+                                required
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-gray-700 mb-2">Coli (Qty)</label>
+                              <input
+                                name="coli"
+                                type="number"
+                                defaultValue={editingShipment?.coli || 1}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                              />
+                            </div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-gray-700 mb-2">Description of Goods</label>
+                          <input
+                            name="description"
+                            type="text"
+                            defaultValue={editingShipment?.description}
+                            placeholder="e.g. Electronics, Clothes"
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-gray-700 mb-2">Insurance</label>
+                              <input
+                                name="insurance"
+                                type="number"
+                                defaultValue={editingShipment?.insurance}
+                                placeholder="0"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-gray-700 mb-2">Packing</label>
+                              <select
+                                name="packing"
+                                defaultValue={editingShipment?.packing || ''}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                              >
+                                <option value="">None</option>
+                                <option value="Wooden">Wooden</option>
+                                <option value="Bubble Wrap">Bubble Wrap</option>
+                                <option value="Cardboard">Cardboard</option>
+                              </select>
+                            </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-gray-700 mb-2">Status</label>
+                          <select
+                            name="status"
+                            defaultValue={editingShipment?.status || 'Created'}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          >
+                            {statuses.map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-gray-700 mb-2">Vendor</label>
+                          <select
+                            name="vendorId"
+                            defaultValue={editingShipment?.vendorId || ''}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          >
+                            <option value="">Select Vendor</option>
+                            {vendors.map((vendor) => (
+                              <option key={vendor.id} value={vendor.id}>
+                                {vendor.name} ({vendor.type})
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block text-gray-700 mb-2">Layanan (Service)</label
+                          >
+                          <select
+                            name="service"
+                            defaultValue={editingShipment?.service || ''}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          >
+                            <option value="">Pilih Layanan</option>
+                            {services.map((svc) => (
+                              <option key={svc.id} value={svc.title}>{svc.title}</option>
+                            ))}
+                            <option value="Reguler">Reguler</option>
+                            <option value="Express">Express</option>
+                            <option value="Kargo Udara">Kargo Udara</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block text-gray-700 mb-2">Estimated Delivery</label>
+                          <input
+                            name="estimatedDelivery"
+                            type="date"
+                            defaultValue={editingShipment?.estimatedDelivery}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none"
+                          />
+                        </div>
                     </div>
                   </div>
+                  
                   <div>
                     <label className="block text-gray-700 mb-2">Notes</label>
                     <textarea
@@ -342,6 +516,7 @@ export default function ShipmentManagement() {
                       className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-600 focus:outline-none resize-none"
                     />
                   </div>
+
                   <div className="flex gap-4 pt-4">
                     <button
                       type="submit"

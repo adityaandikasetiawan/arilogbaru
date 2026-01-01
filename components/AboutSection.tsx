@@ -1,6 +1,8 @@
 import { Award, MapPin, Package, Users, TrendingUp } from 'lucide-react';
 import { motion } from 'motion/react';
 
+const proxify = (url: string) => `/proxy-image?src=${encodeURIComponent(url)}`;
+
 export default function AboutSection() {
   const stats = [
     {
@@ -56,7 +58,7 @@ export default function AboutSection() {
             </div>
             <h2 className="mb-6 text-4xl md:text-5xl">Tentang Kami</h2>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              At PT Avantie Insyirah Raya, our key capabilities revolve around delivering exceptional logistics solutions that prioritize customer satisfaction and long-term partnerships. We are committed to seamless logistics and boundless integrity, ensuring that our clients can rely on our services to streamline their supply chain operations.
+              At Airlog, our key capabilities revolve around delivering exceptional logistics solutions that prioritize customer satisfaction and long-term partnerships. We are committed to seamless logistics and boundless integrity, ensuring that our clients can rely on our services to streamline their supply chain operations.
             </p>
             
             <div className="space-y-6">
@@ -88,7 +90,7 @@ export default function AboutSection() {
             <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
                 <img
-                  src="https://images.unsplash.com/photo-1553413077-190dd305871c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXJlaG91c2UlMjBzdG9yYWdlfGVufDF8fHx8MTc2NDE2NTE4M3ww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src={proxify('https://images.unsplash.com/photo-1553413077-190dd305871c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXJlaG91c2UlMjBzdG9yYWdlfGVufDF8fHx8MTc2NDE2NTE4M3ww&ixlib=rb-4.1.0&q=80&w=1080')}
                   alt="Warehouse"
                   className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
@@ -96,7 +98,7 @@ export default function AboutSection() {
               </div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl group mt-8">
                 <img
-                  src="https://images.unsplash.com/photo-1664382953403-fc1ac77073a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXJlaG91c2UlMjB3b3JrZXJzfGVufDF8fHx8MTc2NDIzNjU3Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src={proxify('https://images.unsplash.com/photo-1664382953403-fc1ac77073a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXJlaG91c2UlMjB3b3JrZXJzfGVufDF8fHx8MTc2NDIzNjU3Nnww&ixlib=rb-4.1.0&q=80&w=1080')}
                   alt="Workers"
                   className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
@@ -106,7 +108,7 @@ export default function AboutSection() {
             <div className="space-y-6 mt-8">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
                 <img
-                  src="https://images.unsplash.com/photo-1762629027416-8e85a008b0bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZWxpdmVyeSUyMHRydWNrJTIwZmxlZXR8ZW58MXx8fHwxNzY0MjI4MTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src={proxify('https://images.unsplash.com/photo-1762629027416-8e85a008b0bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZWxpdmVyeSUyMHRydWNrJTIwZmxlZXR8ZW58MXx8fHwxNzY0MjI4MTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080')}
                   alt="Delivery Trucks"
                   className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
@@ -114,7 +116,7 @@ export default function AboutSection() {
               </div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl group mt-8">
                 <img
-                  src="https://images.unsplash.com/photo-1713859326033-f75e04439c3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMHRydWNrJTIwbG9naXN0aWNzfGVufDF8fHx8MTc2NDE4MDc1OHww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src={proxify('https://images.unsplash.com/photo-1713859326033-f75e04439c3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMHRydWNrJTIwbG9naXN0aWNzfGVufDF8fHx8MTc2NDE4MDc1OHww&ixlib=rb-4.1.0&q=80&w=1080')}
                   alt="Logistics"
                   className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
